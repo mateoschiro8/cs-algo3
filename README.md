@@ -1,2 +1,2 @@
 # cs-algo3
-Algoritmos y estructuras de datos 3 - 2c2023
+Repo de algoritmos y estructuras de datos 3 - 2c2023
