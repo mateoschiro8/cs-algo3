@@ -6,6 +6,8 @@ using namespace std;
 
 int main() {
 
-    pruebaEj8();
+    // g++ main.cpp -o main && ./main
+
+    pruebaEj9();
 
 }
