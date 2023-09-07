@@ -2,13 +2,13 @@
 #ifndef P1_HEADERS_H
 #define P1_HEADERS_H
 
-#include "Ej1.h"
-#include "Ej2.h"
-#include "Ej3.h"
-#include "Ej6.h"
-#include "Ej7.h"
-#include "Ej8.h"
-#include "Ej9.h"
+#include "Ej01.h"
+#include "Ej02.h"
+#include "Ej03.h"
+#include "Ej06.h"
+#include "Ej07.h"
+#include "Ej08.h"
+#include "Ej09.h"
 #include "Ej10.h"
 
 #endif //P1_HEADERS_H
