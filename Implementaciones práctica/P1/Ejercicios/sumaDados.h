@@ -4,6 +4,7 @@
 using namespace std;
 
 
+// O(n * k * min(s, nk))
 int sumaDados(vector<vector<vector<int>>>& memo, int i, int j, int l) {
     if(j < 0 || i == 0 && j != 0 || j == 0 && i > 0)
         return 0;
