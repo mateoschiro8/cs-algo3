@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "Ejercicios/Headers.h"
+#include "Ejercicios/headersP1.h"
 
 using namespace std;
 
