@@ -11,4 +11,6 @@
 #include "Ej09.h"
 #include "Ej10.h"
 
+#include "sumaDados.h"
+
 #endif //P1_HEADERS_H

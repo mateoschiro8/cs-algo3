@@ -8,6 +8,6 @@ int main() {
 
     // g++ main.cpp -o main && ./main
 
-    pruebaEj10();
+    pruebaSumaDados();
 
 }
