@@ -12,5 +12,6 @@
 #include "Ej10.h"
 
 #include "sumaDados.h"
+#include "cadenasCarac.h"
 
 #endif //P1_HEADERS_H
