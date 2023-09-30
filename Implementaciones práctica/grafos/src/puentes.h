@@ -3,84 +3,83 @@
 
 using namespace std;
 
-// Algoritmo para determinar Tree Edges, Back Edges y Puentes a partir del recorrido BFS de un grafo CONEXO
-
+// Algoritmo para determinar Tree Edges, Back Edges y Puentes,
+// a partir del recorrido DFS de un grafo CONEXO y utilizando el algoritmo de Tarjan
 
 int noVisto = 0, enProceso = 1, visto = 2;
 
-vector<vector<int>> aristas = {{3,5,6,9}, {4,6,8}, {1,5,6,7}, {2,10}, {1,3,7}, {1,2,3}, 
+vector<vector<int>> aristas = {{}, {3,5,6,9}, {4,6,8}, {1,5,6,7}, {2,10}, {1,3,7}, {1,2,3}, 
                                {3,5}, {2,3}, {1,11,12}, {4}, {9,12}, {9,11}};
     
 int n = aristas.size();
+
+vector<int> padre(n, 0);
+vector<int> estado(n, noVisto);
+vector<int> profundidad(n, 0);
 
 vector<pair<int, int>> treeEdges;
 vector<pair<int, int>> backEdges;
 vector<pair<int, int>> bridges;
 
-vector<vector<int>> treeEdgesPorNodo(n);
+// Tiempo que un nodo tomó para ser visitado
+vector<int> tiempoVisto(n);
 
-vector<int> profundidad(n, 0);
+// Mínimo tiempo de visita de todos los nodos adyacentes (y distintos al padre) de un nodo
+vector<int> minTiempoVisto(n);
 
-vector<int> backEdgesConExtremoInferiorEn(n, 0);
-vector<int> backEdgesConExtremoSuperiorEn(n, 0);
+int tiempo = 1;
 
-vector<int> padre(n, 0);
+void dfsPuentes(int v) {
 
-void dfsPuentes(int v, vector<int>& estado) {
-
-    estado[v - 1] = visto;
-    profundidad[v - 1] = (v - 1 > 0) ? profundidad[padre[v - 1] - 1] + 1 : 0;
     cout << " " << v << ",";
 
-    for(int u : aristas[v - 1]) {
-        if(estado[u - 1] == noVisto) {
+    estado[v] = visto;
+
+    profundidad[v] = profundidad[padre[v]] + 1;
+
+    tiempoVisto[v] = tiempo;
+    minTiempoVisto[v] = tiempo;
+    tiempo++;
+
+    for(int u : aristas[v]) {
+
+        if(u == padre[v])
+            continue;
+
+        if(estado[u] == noVisto) {
+            
+            padre[u] = v;
             treeEdges.push_back({v, u});
-            padre[u - 1] = v;
-            dfsPuentes(u, estado);
+
+            dfsPuentes(u);
+            
+            minTiempoVisto[v] = min(minTiempoVisto[v], minTiempoVisto[u]);
+
+            if(minTiempoVisto[u] > tiempoVisto[v]) 
+                bridges.push_back({v, u});
+
         }   
-        else if(estado[u - 1] == enProceso) {
-            backEdgesConExtremoInferiorEn[u - 1]++;
 
-    }
-        else if(estado[u - 1] == visto && padre[v - 1] != u) {
-            if(profundidad[u - 1] < profundidad[v - 1])
-                backEdges.push_back({u, v});
-            backEdgesConExtremoSuperiorEn[u - 1]++;
-        }
-    }
-    estado[v] == visto;
+        else if(u != padre[v]) {
 
-}
-
-vector<int> memo(n, - 1);
-int cubren(int v, int p = -1) {
-    if(memo[v - 1] == -1) {
+        minTiempoVisto[v] = min(minTiempoVisto[u], minTiempoVisto[v]);        
         
-        int res = 0;
+        if(profundidad[u] < profundidad[v])
+            backEdges.push_back({u, v});
 
-        for(int hijo : treeEdgesPorNodo[v - 1]) {
-            if(hijo != p)
-                res += cubren(hijo, v);
         }
-        
-        res -= backEdgesConExtremoSuperiorEn[v - 1];
-        res += backEdgesConExtremoInferiorEn[v - 1];
-
-        memo[v - 1] = res;
+    
     }
 
-    return memo[v - 1];
 }
 
 void puentes() {
 
-    treeEdges = {};
-    backEdges = {};
+    int inicial = 1;
 
-    vector<int> estado(n, noVisto);
     cout << "Recorrido DFS " << endl;
     cout << "Pasé por: ";
-    dfsPuentes(1, estado);
+    dfsPuentes(inicial);
     cout << endl;
 
     cout << "Las tree edges son: " << endl;
@@ -93,22 +92,9 @@ void puentes() {
         cout << v << "-" << w << ", ";
     cout << endl;
 
-    /*
-    cout << "Profundidades: " << endl;
-    for(int i = 0; i < profundidad.size(); i++) 
-        cout << "El nodo " << i + 1 << " tiene profundidad " << profundidad[i] << endl;
-    
-    cout << "Padres: " << endl;
-    for(int i = 0; i < padre.size(); i++) 
-        cout << "El padre de " << i + 1 << " es " << padre[i] << endl;
-    */
+    cout << "Los puentes son: " << endl;
+    for(auto [v, w] : bridges) 
+        cout << v << "-" << w << ", ";
+    cout << endl;
 
-    int puentes = 0;
-    for(int i = 0; i < n; i++) {
-        if(cubren(i) == 0)
-            puentes++;
-    }
-    cout << "Y tiene " << puentes << " puentes" << endl;
-
-    cout << "Pero eso no es correcto y hace falta corregirlo salu2" << endl;
 }

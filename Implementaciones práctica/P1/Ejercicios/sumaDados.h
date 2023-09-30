@@ -12,14 +12,13 @@ int sumaDados(vector<vector<vector<int>>>& memo, int i, int j, int l) {
     if(i == 0 && j == 0)
         return 1;
 
+    int res = 0;
     if(memo[i][j][l] == -1) {
-        int res = 0;
         for(int t = 1; t <= l; t++)
             res += sumaDados(memo, i - 1, j - t, t);
-        memo[i][j][l] = res;
     }
 
-    return memo[i][j][l];
+    return (memo[i][j][l] = res);
 
 }   
 
