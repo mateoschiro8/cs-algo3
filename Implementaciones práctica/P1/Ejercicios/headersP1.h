@@ -14,4 +14,6 @@
 #include "sumaDados.h"
 #include "cadenasCarac.h"
 
+#include "knapsack.h"
+
 #endif //P1_HEADERS_H
