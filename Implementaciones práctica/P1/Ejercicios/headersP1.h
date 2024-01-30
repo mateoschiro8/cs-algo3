@@ -15,5 +15,6 @@
 #include "cadenasCarac.h"
 
 #include "knapsack.h"
+#include "lcs.h"
 
 #endif //P1_HEADERS_H
